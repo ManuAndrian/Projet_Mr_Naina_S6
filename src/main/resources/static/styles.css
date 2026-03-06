@@ -1,0 +1,322 @@
+:root {
+    --primary-color: #3498db;
+    --sidebar-bg: #1e293b;
+    --bg-light: #f4f7f6;
+    --text-dim: #94a3b8;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    margin: 0;
+    display: flex; /* Pour aligner Sidebar et Main */
+    min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.brand-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.nav-section {
+    margin-bottom: 2rem;
+}
+
+.nav-label {
+    padding: 0 2rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: 0.3s;
+    gap: 15px;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-left: 4px solid var(--primary-color);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 1.5rem;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+/* --- MAIN CONTENT --- */
+.main-content {
+    margin-left: 260px; /* Largeur de la sidebar */
+    width: calc(100% - 260px);
+    padding: 2rem;
+}
+
+h1 {
+    color: #1e293b;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+/* --- DISPOSITION DES FORMULAIRES --- */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Aligne les formulaires côte à côte */
+    gap: 2rem;
+}
+
+/* Style commun pour chaque section de formulaire */
+.resolution-section, 
+.parametre-section, 
+.operateur-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    color: #334155;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+:root {
+    --primary-color: #4f46e5; /* Un bleu plus moderne */
+    --sidebar-bg: #0f172a;
+    --bg-light: #f8fafc;
+    --text-main: #1e293b;
+    --text-dim: #64748b;
+    --white: #ffffff;
+    --border-color: #e2e8f0;
+}
+
+/* Sidebar reste identique mais affinée */
+.sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    height: 100vh;
+    position: fixed;
+    color: white;
+}
+
+/* --- MAIN CONTENT --- */
+.main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 2.5rem;
+}
+
+
+/* --- GRILLE INTELLIGENTE --- */
+.container {
+    display: grid;
+    /* Colonne de gauche large (2fr), Colonne de droite étroite (1fr) */
+    grid-template-columns: 2fr 1fr; 
+    grid-template-rows: auto auto;
+    gap: 2rem;
+}
+
+/* Placement spécifique des sections */
+.parametre-section {
+    grid-row: 1 / span 2; /* Prend toute la hauteur à gauche */
+}
+
+.resolution-section, .operateur-section {
+    grid-column: 2; /* Ces deux-là vont à droite */
+}
+
+/* --- CARDS STYLE --- */
+.resolution-section, 
+.parametre-section, 
+.operateur-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary);
+    padding-left: 1rem;
+}
+
+.main-content h1 {
+    font-size: 1.8rem;
+    color: var(--text-main);
+    margin-bottom: 2rem;
+}
+
+/* --- GRILLE DES FORMULAIRES --- */
+.container {
+    display: grid;
+    /* Aligne 3 colonnes sur grand écran, 1 sur petit */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* --- CARDS STYLE --- */
+.resolution-section, 
+.parametre-section, 
+.operateur-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.resolution-section:hover, 
+.parametre-section:hover, 
+.operateur-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* En-tête des formulaires */
+h2 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --- FORMULAIRES --- */
+form div {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: #f8fafc;
+    transition: all 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+button {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Boutons plus discrets mais efficaces */
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: opacity 0.2s;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    .parametre-section {
+        grid-row: auto;
+    }
+    .resolution-section, .operateur-section {
+        grid-column: auto;
+    }
+}
