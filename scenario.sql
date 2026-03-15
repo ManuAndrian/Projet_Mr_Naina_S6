@@ -8,9 +8,9 @@ VALUES
     ('Correcteur3','Tiana','2002-05-10','andry@test.com','0320000001');
 
 
-    INSERT INTO Candidat (nom, prenom, date_naissance, email, telephone)
-    VALUES
-   ('Canditat1','Jean','2002-05-10','0340000001','Java'),
+INSERT INTO Candidat (nom, prenom, date_naissance, email, telephone)
+VALUES
+('Canditat1','Jean','2002-05-10','0340000001','Java'),
 ('Canditat2','Paul','2002-05-10','0340000002','Java'),
 ('Canditat2','Marie','2002-05-10','0340000003','Java');
 
@@ -19,7 +19,6 @@ INSERT INTO Matiere (nom_matiere, coefficient)
 VALUES
 ('Programmation Java',2),
 ('Programmation PHP',2);
-
 
 INSERT INTO Note (id_candidat,id_matiere,id_correcteur,valeur)
 VALUES
