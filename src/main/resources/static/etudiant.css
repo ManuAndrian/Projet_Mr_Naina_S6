@@ -1,0 +1,207 @@
+/* --- VARIABLES --- */
+:root {
+    --primary: #4f46e5;      /* Indigo moderne */
+    --primary-light: #eef2ff;
+    --secondary: #0ea5e9;    /* Ocean blue */
+    --accent: #f59e0b;       /* Or pour l'icône de réussite */
+    --dark-slate: #0f172a;   /* Sidebar */
+    --bg-main: #f1f5f9;      /* Fond de page gris bleuté */
+    --white: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    margin: 0;
+    display: flex;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--dark-slate);
+    height: 100vh;
+    position: fixed;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-name { font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    color: #94a3b8;
+    text-decoration: none;
+    gap: 12px;
+    transition: all 0.3s;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: rgba(255,255,255,0.05);
+    color: white;
+    border-left: 4px solid var(--secondary);
+}
+
+.sidebar-footer { padding: 1.5rem; margin-top: auto; background: rgba(0,0,0,0.2); }
+
+/* --- MAIN CONTENT --- */
+.main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 3rem;
+}
+
+h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 2rem; color: var(--dark-slate); }
+
+/* --- CARDS & FORMS --- */
+.card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-main);
+}
+
+h2 i { color: var(--primary); }
+
+.form-group { margin-bottom: 1.5rem; }
+label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.6rem; }
+
+/* Styles pour Select et Input */
+select, input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: #f8fafc;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    transition: all 0.3s;
+    appearance: none; /* Enlève le style par défaut du navigateur */
+}
+
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2rem;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+}
+
+/* --- NOTE FINALE CARD (PREMIUM) --- */
+.final-note-card {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.final-note-card h2 { color: rgba(255,255,255,0.9); border: none; }
+.final-note-card h2 i { color: var(--accent); }
+
+.note-content {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 1rem 0;
+}
+
+.note-icon {
+    font-size: 3.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.student-name { font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem; }
+.student-name span { color: white; font-weight: 700; font-size: 1.2rem; }
+
+.score-display { display: flex; align-items: baseline; }
+.score-value { font-size: 5.5rem; font-weight: 900; line-height: 1; }
+.score-max { font-size: 1.8rem; opacity: 0.7; margin-left: 8px; }
+
+.note-footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.status-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Animation de chargement subtile au survol de la carte de note */
+.final-note-card:hover {
+    transform: scale(1.01);
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}

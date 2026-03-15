@@ -17,8 +17,8 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     // Recherche par matière
     List<Note> findByMatiere_IdMatiere(Integer idMatiere);
     
-    // Recherche par correcteur
-    List<Note> findByCorrecteur_IdCorrecteur(Integer idCorrecteur);
+    // Recherche par correcteur (commenté car l'entité n'existe pas)
+    // List<Note> findByCorrecteur_IdCorrecteur(Integer idCorrecteur);
     
     // Recherche par candidat et matière
     List<Note> findByCandidat_IdCandidatAndMatiere_IdMatiere(Integer idCandidat, Integer idMatiere);

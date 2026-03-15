@@ -21,9 +21,9 @@ public class Note {
     @JoinColumn(name = "id_matiere", nullable = false)
     private Matiere matiere;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_correcteur", nullable = false)
-    private Correcteur correcteur;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "id_correcteur", nullable = false)
+    // private Correcteur correcteur;
     
     @Column(name = "valeur", nullable = false, precision = 5, scale = 2)
     private BigDecimal valeur;
@@ -56,13 +56,13 @@ public class Note {
         this.matiere = matiere;
     }
     
-    public Correcteur getCorrecteur() {
-        return correcteur;
-    }
+    // public Correcteur getCorrecteur() {
+    //     return correcteur;
+    // }
     
-    public void setCorrecteur(Correcteur correcteur) {
-        this.correcteur = correcteur;
-    }
+    // public void setCorrecteur(Correcteur correcteur) {
+    //     this.correcteur = correcteur;
+    // }
     
     public BigDecimal getValeur() {
         return valeur;

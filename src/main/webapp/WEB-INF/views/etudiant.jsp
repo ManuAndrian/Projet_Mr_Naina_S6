@@ -42,63 +42,57 @@
 </aside>
 
 <main class="main-content">
-    <h1>Gestion des Étudiants & Notes</h1>
+    <h1>Tableau de Bord Étudiant</h1>
 
-    <div class="container">
-        <div class="card form-section">
-            <h2><i class="fas fa-user-plus"></i> Inscription Étudiant</h2>
-            <form action="etudiant" method="post">
-                <div class="form-group">
-                    <label>Nom de l'étudiant</label>
-                    <input type="text" name="nom" placeholder="Ex: Jean Dupont" required>
-                </div>
-                <button type="submit">Enregistrer l'étudiant</button>
-            </form>
+    <div class="card form-section">
+    <h2><i class="fas fa-user-graduate"></i> Sélectionner Étudiant et Matière</h2>
+    <form action="finalNote" method="get"> <!-- le controller qui calcule la note finale -->
+        
+        <!-- Liste déroulante Étudiant -->
+        <div class="form-group">
+            <label>Nom de l'étudiant</label>
+            <select name="candidatId" required>
+                <option value="">-- Sélectionner un étudiant --</option>
+                <c:forEach items="${etudiants}" var="e">
+                    <option value="${e.id}">${e.nom} ${e.prenom}</option>
+                </c:forEach>
+            </select>
         </div>
 
-        <div class="card form-section">
-            <h2><i class="fas fa-book"></i> Nouvelle Matière</h2>
-            <form action="matiere" method="post">
-                <div class="form-group">
-                    <label>Intitulé de la matière</label>
-                    <input type="text" name="nom_matiere" placeholder="Ex: Programmation Java" required>
-                </div>
-                <button type="submit" class="btn-secondary">Ajouter la matière</button>
-            </form>
+        <!-- Liste déroulante Matière -->
+        <div class="form-group">
+            <label>Intitulé de la matière</label>
+            <select name="matiereId" required>
+                <option value="">-- Sélectionner une matière --</option>
+                <c:forEach items="${matieres}" var="m">
+                    <option value="${m.id}">${m.nomMatiere}</option>
+                </c:forEach>
+            </select>
         </div>
 
-        <div class="card display-section">
-            <div class="card-header">
-                <h2><i class="fas fa-list-check"></i> Relevé de Notes</h2>
+        <!-- Bouton de validation -->
+        <button type="submit" class="btn-primary">
+            <i class="fas fa-calculator"></i> Calculer Note Finale
+        </button>
+    </form>
+</div>
+
+        <div class="card final-note-card">
+            <div class="note-content">
+                <div class="note-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="note-info">
+                    <h2>Note Finale Globale</h2>
+                    <p class="student-name">Résultat pour : <span>Cette eleve</span></p>
+                    <div class="score-display">
+                        <span class="score-value">${noteFinale}</span>
+                        <span class="score-max">/ 20</span>
+                    </div>
+                </div>
             </div>
-            
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Étudiant</th>
-                            <th>Matière</th>
-                            <th>Note / 20</th>
-                            <th>Statut</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>ManuAndria</td>
-                            <td>Développement Web</td>
-                            <td><span class="note-badge">16.50</span></td>
-                            <td><span class="status-badge status-pass">Admis</span></td>
-                        </tr>
-                        <c:forEach items="${notes}" var="n">
-                            <tr>
-                                <td>${n.nom_etudiant}</td>
-                                <td>${n.nom_matiere}</td>
-                                <td><span class="note-badge">${n.valeur}</span></td>
-                                <td><span class="status-badge status-pass">Validé</span></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+            <div class="note-footer">
+                <span class="status-tag">Moyenne calculée automatiquement</span>
             </div>
         </div>
     </div>

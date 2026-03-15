@@ -38,7 +38,7 @@ public class NoteService {
             Note note = noteOptional.get();
             note.setCandidat(noteDetails.getCandidat());
             note.setMatiere(noteDetails.getMatiere());
-            note.setCorrecteur(noteDetails.getCorrecteur());
+            // note.setCorrecteur(noteDetails.getCorrecteur());
             note.setValeur(noteDetails.getValeur());
             note.setDateEvaluation(noteDetails.getDateEvaluation());
             return noteRepository.save(note);
@@ -63,10 +63,15 @@ public class NoteService {
     public List<Note> findByMatiere(Integer idMatiere) {
         return noteRepository.findByMatiere_IdMatiere(idMatiere);
     }
-    
-    public List<Note> findByCorrecteur(Integer idCorrecteur) {
-        return noteRepository.findByCorrecteur_IdCorrecteur(idCorrecteur);
+
+    public List<Note> findByCandidatAndByMatiere(Integer idCandidat, Integer idMatiere){
+        return noteRepository.findByCandidat_IdCandidatAndMatiere_IdMatiere(idCandidat,idMatiere);
     }
+
+    // Recherche par correcteur (commenté car l'entité n'existe pas)
+    // public List<Note> findByCorrecteur(Integer idCorrecteur) {
+    //     return noteRepository.findByCorrecteur_IdCorrecteur(idCorrecteur);
+    // }
     
     public List<Note> findByDateEvaluation(LocalDate date) {
         return noteRepository.findByDateEvaluation(date);
@@ -74,5 +79,26 @@ public class NoteService {
     
     public List<Note> findByValeurGreaterThan(BigDecimal valeur) {
         return noteRepository.findByValeurGreaterThan(valeur);
+    }
+
+    // TRAITEMENT SUPPLÉMENTAIRE
+
+public BigDecimal calculEcart(List<Note> notes) {
+    if (notes == null || notes.size() < 2) {
+        return BigDecimal.ZERO; // pas d'écart si moins de 2 notes
+    }
+
+    BigDecimal sommeEcart = BigDecimal.ZERO;
+    int nbEcart = 0;
+
+    // double boucle pour tous les écarts possibles
+    for (int i = 0; i < notes.size(); i++) {
+        for (int j = i + 1; j < notes.size(); j++) {
+            BigDecimal diff = notes.get(i).getValeur().subtract(notes.get(j).getValeur()).abs();
+            sommeEcart = sommeEcart.add(diff);
+            nbEcart++;
+        }
+    }
+    return sommeEcart;
     }
 }

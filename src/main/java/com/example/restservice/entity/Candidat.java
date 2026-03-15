@@ -28,6 +28,10 @@ public class Candidat {
     private String telephone;
     
     // Getters et Setters
+    public Integer getId() {
+        return idCandidat;
+    }
+    
     public Integer getIdCandidat() {
         return idCandidat;
     }

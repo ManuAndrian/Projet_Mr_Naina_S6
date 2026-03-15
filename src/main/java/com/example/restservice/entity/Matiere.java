@@ -18,6 +18,10 @@ public class Matiere {
     private Integer coefficient = 1;
     
     // Getters et Setters
+    public Integer getId() {
+        return idMatiere;
+    }
+    
     public Integer getIdMatiere() {
         return idMatiere;
     }
