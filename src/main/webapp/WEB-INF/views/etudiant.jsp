@@ -46,7 +46,7 @@
 
     <div class="card form-section">
     <h2><i class="fas fa-user-graduate"></i> Sélectionner Étudiant et Matière</h2>
-    <form action="finalNote" method="get"> <!-- le controller qui calcule la note finale -->
+    <form action="/finalNote" method="get"> <!-- le controller qui calcule la note finale -->
         
         <!-- Liste déroulante Étudiant -->
         <div class="form-group">
