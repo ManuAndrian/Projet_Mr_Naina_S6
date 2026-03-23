@@ -11,7 +11,7 @@
     <nav class="sidebar">
         <h2>ManuAndria Dev</h2>
         <a href="#">Tableau de bord</a>
-        <a href="">Utilisateurs</a>
+        <a href="/client">Client</a>
         <a href="/operateur">Paramètres</a>
         <a href="">Déconnexion</a>
     </nav>
