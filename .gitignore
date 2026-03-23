@@ -4,6 +4,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Configuration files ###
+*.properties
+application-*.properties
+application-*.yml
+application-*.yaml
+
 ### STS ###
 .apt_generated
 .classpath
@@ -31,3 +37,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+

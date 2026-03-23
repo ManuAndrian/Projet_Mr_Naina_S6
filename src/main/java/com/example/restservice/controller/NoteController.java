@@ -16,7 +16,6 @@ import com.example.restservice.service.NoteService;
 import com.example.restservice.service.ParametreService;
 
 
-
 @Controller
 public class NoteController {
 

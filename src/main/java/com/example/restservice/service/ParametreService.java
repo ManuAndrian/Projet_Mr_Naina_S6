@@ -1,11 +1,13 @@
 package com.example.restservice.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.restservice.Utils.FonctionUtils;
 import com.example.restservice.entity.Note;
 import com.example.restservice.entity.Operateur;
 import com.example.restservice.entity.Parametre;
@@ -50,7 +52,56 @@ public class ParametreService {
             return p.getResolution();
         }
     }
-    return null; // ou une valeur par défaut si aucune condition n'est satisfaite
+    return null; 
+}
+
+public List<Parametre> getAllParameterOfConditionTrue(Operateur operateur, BigDecimal ecart, List<Parametre> parametres) {
+
+    List<Parametre> result = new ArrayList<>();
+
+    for (Parametre p : parametres) {
+        if (isOperationCondition(operateur, ecart, p)) {
+            result.add(p);
+        }
+    }
+    return result;
+}
+
+public Parametre getRightParameterBetween(List<Parametre> parametres, double ecart) {
+
+    // Vérification
+    if (parametres == null || parametres.isEmpty()) {
+        System.err.println("Erreur: La liste de paramètres est null ou vide");
+        throw new IllegalArgumentException("La liste ne peut pas être null ou vide");
+
+    }else if(parametres.size() == 1) {
+        return parametres.get(0);
+    }
+
+    double closest = parametres.get(0).getValeur().doubleValue();
+    List<Parametre> PvalueProche = new ArrayList<>();
+
+    for (Parametre p : parametres) {
+        double value = p.getValeur().doubleValue();
+        
+        if (Math.abs(value - ecart) <= Math.abs(closest - ecart)) {
+            closest = value;
+            PvalueProche.clear();
+            PvalueProche.add(p);
+        } else if (Math.abs(value - ecart) == Math.abs(closest - ecart)) {
+            PvalueProche.add(p);
+        }
+    }
+
+    if (PvalueProche.size() > 1) {
+        PvalueProche.set(0, FonctionUtils.compareMin(PvalueProche));
+    }
+
+    if (PvalueProche == null || PvalueProche.isEmpty()) {
+        System.err.println("Erreur: Aucune valeur proche trouvée");
+        throw new IllegalStateException("Aucune valeur proche n'a été trouvée");
+    }
+    return PvalueProche.get(0); 
 }
 
  public double NoteFinaleEleve(BigDecimal ecart, Integer idMatiere, List<Note> notes) {
@@ -58,27 +109,38 @@ public class ParametreService {
             throw new IllegalArgumentException("La liste des notes est vide !");
         }
 
-        // 1️⃣ Récupérer les paramètres pour la matière
         List<Parametre> parametres = parametreRepository.findByMatiere_IdMatiere(idMatiere);
         if (parametres == null || parametres.isEmpty()) {
             throw new IllegalArgumentException("Aucun paramètre défini pour cette matière !");
         }
 
-        // 2️⃣ Déterminer la résolution applicable en fonction de l'opérateur et de l'écart
         Resolution resolution = null;
+
+        List<Parametre> parametresFiltres = new ArrayList<>(parametres);
+        
         for (Parametre p : parametres) {
-            if (isOperationCondition(p.getOperateur(), ecart, p)) {
-                resolution = p.getResolution();
-                break; // on prend la première correspondante
-            }
+             List<Parametre> tempResult = getAllParameterOfConditionTrue(p.getOperateur(), ecart, parametresFiltres);
+             if (tempResult != null && !tempResult.isEmpty()) {
+                 parametresFiltres = tempResult;
+             }
+        }
+       
+        if (parametresFiltres == null || parametresFiltres.isEmpty()) {
+            throw new IllegalArgumentException("Aucun paramètre ne correspond aux conditions pour l'écart donné: " + ecart);
         }
 
+        Parametre parametre = getRightParameterBetween(parametresFiltres, ecart.doubleValue());
+
+        if (parametre != null) {
+            resolution = parametre.getResolution();
+        }           
         if (resolution == null) {
             throw new IllegalStateException("Aucune résolution applicable pour l'écart donné !");
         }
 
         // 3️⃣ Calculer la note finale selon la résolution
         return resolutionService.getNoteFrom(resolution, notes);
-
     }
 }  
+
+
