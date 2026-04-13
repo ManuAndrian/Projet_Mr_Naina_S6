@@ -3,6 +3,8 @@ package com.example.restservice.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Client")
 public class Client {
@@ -21,6 +23,7 @@ public class Client {
     @Column(name = "adresse", length = 100)
     private String adresse;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Demande> demandes;
     

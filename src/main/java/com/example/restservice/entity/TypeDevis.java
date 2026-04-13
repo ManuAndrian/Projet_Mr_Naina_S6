@@ -3,6 +3,8 @@ package com.example.restservice.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TypeDevis")
 public class TypeDevis {
@@ -15,7 +17,8 @@ public class TypeDevis {
     @Column(name = "type", nullable = false, length = 100)
     private String type;
     
-    @OneToMany(mappedBy = "typeDevis", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "typeDevis")
     private List<Devis> devis;
     
     // Getters et Setters

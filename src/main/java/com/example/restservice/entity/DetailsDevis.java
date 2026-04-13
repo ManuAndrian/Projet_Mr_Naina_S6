@@ -3,6 +3,8 @@ package com.example.restservice.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "DetailsDevis")
 public class DetailsDevis {
@@ -14,6 +16,7 @@ public class DetailsDevis {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_devis", nullable = false)
+    @JsonIgnore
     private Devis devis;
     
     @Column(name = "description", length = 255)
@@ -22,6 +25,9 @@ public class DetailsDevis {
     @Column(name = "prixUnitaire", precision = 10, scale = 2)
     private BigDecimal prixUnitaire;
     
+    @Column(name = "quantite")
+    private Integer quantite;
+
     // Getters et Setters
     public Integer getIdDetailsDevis() {
         return idDetailsDevis;
@@ -50,8 +56,15 @@ public class DetailsDevis {
     public BigDecimal getPrixUnitaire() {
         return prixUnitaire;
     }
-    
+
     public void setPrixUnitaire(BigDecimal prixUnitaire) {
         this.prixUnitaire = prixUnitaire;
+    }
+    public Integer getQuantite() {
+        return quantite;
+    }
+    
+    public void setQuantite(Integer quantite) {
+        this.quantite = quantite;
     }
 }

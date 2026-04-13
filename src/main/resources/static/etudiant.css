@@ -25,14 +25,17 @@ body {
 
 /* --- SIDEBAR --- */
 .sidebar {
-    width: 260px;
+    width: 100%;
     background-color: var(--dark-slate);
-    height: 100vh;
     position: fixed;
     color: white;
     display: flex;
-    flex-direction: column;
-    z-index: 100;
+    height: 50px;
+    z-index: 1;
+}
+
+.slidebar span{
+    font-size: large;
 }
 
 .sidebar-header {
@@ -42,22 +45,63 @@ body {
     gap: 12px;
 }
 
-.brand-name { font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
+.brand-name { font-weight: 700; font-size: 1.4rem; letter-spacing: 0.5px; }
+
 
 .nav-item {
     display: flex;
     align-items: center;
     padding: 0.8rem 2rem;
     color: #94a3b8;
+    font-size: 18px; 
+    font-weight: 500;
     text-decoration: none;
     gap: 12px;
     transition: all 0.3s;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    height: 100px;
+    color: white;
+    text-align: center;
 }
 
 .nav-item:hover, .nav-item.active {
     background-color: rgba(255,255,255,0.05);
     color: white;
     border-left: 4px solid var(--secondary);
+}
+
+.nav-label {
+    padding: 0 2rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-size: medium;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+     width: 100%; /* IMPORTANT */
+}
+
+.nav-menu {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-section {
+    margin-left: auto;
 }
 
 .sidebar-footer { padding: 1.5rem; margin-top: auto; background: rgba(0,0,0,0.2); }
@@ -71,15 +115,7 @@ body {
 
 h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 2rem; color: var(--dark-slate); }
 
-/* --- CARDS & FORMS --- */
-.card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2rem;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    margin-bottom: 2rem;
-}
+/* --- FORMS --- */
 
 h2 {
     font-size: 1.1rem;
@@ -139,69 +175,460 @@ select:focus, input:focus {
     transition: all 0.3s;
 }
 
+
+.btn-demande{
+    display: flex;
+}
+
+button {
+    width: 20%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 5px;
+    height: 40px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    transition: all 0.3s;
+}
+
 .btn-primary:hover {
     background: #4338ca;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
 }
 
-/* --- NOTE FINALE CARD (PREMIUM) --- */
-.final-note-card {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-    color: white;
-    border: none;
-    display: flex;
-    flex-direction: column;
+
+/* --- TABLE STYLES --- */
+.demande-list-section {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
 }
 
-.final-note-card h2 { color: rgba(255,255,255,0.9); border: none; }
-.final-note-card h2 i { color: var(--accent); }
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+}
 
-.note-content {
-    display: flex;
+.data-table therapeutic {
+    background-color: #f8fafc;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+}
+
+.data-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover {
+    background-color: #f1f5f9;
+    transition: background 0.2s ease;
+}
+
+/* --- BADGES & BUTTONS IN TABLE --- */
+.badge-statut {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.btn-edit, .btn-delete {
+    display: inline-flex;
     align-items: center;
-    gap: 2.5rem;
-    padding: 1rem 0;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-left: 5px;
+    transition: all 0.2s;
 }
 
-.note-icon {
-    font-size: 3.5rem;
-    background: rgba(255, 255, 255, 0.2);
-    width: 100px;
-    height: 100px;
+.btn-edit {
+    background-color: #f0f9ff;
+    color: #0369a1;
+}
+
+.btn-edit:hover {
+    background-color: #0ea5e9;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+.btn-delete:hover {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* Message de succès */
+.success-message {
+    padding: 1rem;
+    background-color: #ecfdf5;
+    color: #065f46;
+    border-left: 4px solid #10b981;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+
+/* --- TABLEAU CLIENT AJAX (MODERNE ET LARGE) --- */
+#tableau {
+    width: 100%;             /* Occupe toute la largeur disponible */
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    background: var(--white);
+    border-collapse: separate; 
+    border-spacing: 0;
+    border-radius: 16px;     /* Arrondi plus prononcé */
+    overflow: hidden;
+    box-shadow: var(--shadow); /* Utilise ton ombre définie dans :root */
+    border: 1px solid var(--border);
+    animation: slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* En-tête stylisée */
+#tableau thead {
+    background: linear-gradient(135deg, var(--dark-slate) 0%, #1e293b 100%);
+}
+
+#tableau th {
+    color: var(--white);
+    padding: 1.5rem;         /* Plus d'espace */
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+/* Lignes du corps */
+#tbodyClient tr {
+    transition: all 0.3s ease;
+}
+
+/* Effet au survol de la ligne */
+#tbodyClient tr:hover {
+    background-color: var(--primary-light);
+    transform: scale(1.005); /* Effet de zoom très léger */
+}
+
+#tbodyClient td {
+    padding: 1.5rem;         /* Cellules plus hautes */
+    font-size: 1rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+/* Style spécial pour l'ID et le Nom */
+#tbodyClient td:first-child {
+    color: var(--primary);
+    font-weight: 800;
+    width: 100px;           /* Largeur fixe pour l'ID */
+}
+
+#tbodyClient td:nth-child(2) {
+    font-weight: 700;       /* Met le nom en gras */
+}
+
+/* Animation plus fluide */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optionnel : Ajoute une petite icône avant le texte via JS si tu veux */
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Message si le tableau est vide (optionnel) */
+#tableau:not([style*="display: table"]) {
+    display: none;
+}
+
+
+/* Style des inputs dans les cellules */
+.input-table {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: #f8fafc;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+/* Effet au clic sur l'input */
+.input-table:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Bouton supprimer (Rouge discret) */
+.btn-delete-row {
+    background: #fee2e2; /* Rouge très clair */
+    color: #ef4444;      /* Rouge vif */
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 24px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.3);
 }
 
-.student-name { font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem; }
-.student-name span { color: white; font-weight: 700; font-size: 1.2rem; }
-
-.score-display { display: flex; align-items: baseline; }
-.score-value { font-size: 5.5rem; font-weight: 900; line-height: 1; }
-.score-max { font-size: 1.8rem; opacity: 0.7; margin-left: 8px; }
-
-.note-footer {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.2);
+.btn-delete-row:hover {
+    background: #ef4444;
+    color: white;
+    transform: rotate(5deg) scale(1.1);
 }
 
-.status-tag {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    font-size: 0.8rem;
+/* Ajustement pour les colonnes numériques */
+input[type="number"] {
+    text-align: right;
+    font-family: 'Courier New', Courier, monospace; /* Style "chiffres" */
+}
+
+/* --- SECTION RESULTATS DEVIS --- */
+.devis-resultat {
+    margin-top: 120px;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+/* Style pour chaque devis individuel */
+.devis-resultat > div {
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.devis-resultat > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.devis-resultat > div:hover::before {
+    width: 8px;
+}
+
+.devis-resultat > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary);
+}
+
+/* Titre du devis */
+.devis-resultat h3 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.devis-resultat h3::before {
+    content: '📋';
+    font-size: 1.2rem;
+}
+
+/* Informations du devis */
+.devis-resultat p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.devis-resultat p strong {
+    color: var(--dark-slate);
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    min-width: 80px;
 }
 
-/* Animation de chargement subtile au survol de la carte de note */
-.final-note-card:hover {
-    transform: scale(1.01);
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Style pour les valeurs spéciales */
+.devis-resultat p:nth-child(2) strong::before { content: '🏷️ '; }
+.devis-resultat p:nth-child(3) strong::before { content: '📅 '; }
+.devis-resultat p:nth-child(4) strong::before { content: '💰 '; }
+
+/* Tableau des détails */
+.devis-resultat table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.devis-resultat th {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: var(--white);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.devis-resultat td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+.devis-resultat tr:last-child td {
+    border-bottom: none;
+}
+
+.devis-resultat tr:hover {
+    background-color: var(--primary-light);
+    transition: background 0.2s ease;
+}
+
+/* Alignement pour les colonnes numériques */
+.devis-resultat td:nth-child(2),
+.devis-resultat td:nth-child(3) {
+    text-align: right;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+}
+
+.devis-resultat td:nth-child(2) {
+    color: var(--secondary);
+}
+
+.devis-resultat td:nth-child(3) {
+    color: var(--accent);
+}
+
+/* Message si aucun détail disponible */
+.devis-resultat td[colspan] {
+    text-align: center !important;
+    color: var(--text-muted) !important;
+    font-style: italic;
+    padding: 20px !important;
+    background-color: #f8fafc;
+}
+
+/* Animation d'apparition des devis */
+@keyframes devisSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.devis-resultat > div {
+    animation: devisSlideIn 0.5s ease-out;
+}
+
+.devis-resultat > div:nth-child(2) { animation-delay: 0.1s; }
+.devis-resultat > div:nth-child(3) { animation-delay: 0.2s; }
+.devis-resultat > div:nth-child(4) { animation-delay: 0.3s; }
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    .devis-resultat {
+        margin-top: 80px;
+        padding: 15px;
+    }
+    
+    .devis-resultat > div {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .devis-resultat h3 {
+        font-size: 1.3rem;
+    }
+    
+    .devis-resultat table {
+        font-size: 0.85rem;
+    }
+    
+    .devis-resultat th,
+    .devis-resultat td {
+        padding: 8px 10px;
+    }
 }

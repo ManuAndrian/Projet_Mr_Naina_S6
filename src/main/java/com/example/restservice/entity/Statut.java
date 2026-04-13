@@ -42,4 +42,5 @@ public class Statut {
     public void setDemandeStatuts(List<DemandeStatut> demandeStatuts) {
         this.demandeStatuts = demandeStatuts;
     }
+
 }

@@ -6,76 +6,45 @@
     <meta charset="UTF-8">
     <title>Gestion Demandes - ETU 3661</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="etudiant.css">
+    <link rel="stylesheet" href="/etudiant.css">
 </head>
 <body>
 
-<aside class="sidebar">
-    <div class="sidebar-header">
-        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
-        <div class="brand-name">EduManager</div>
-    </div>
-
-    <div class="nav-section">
-        <div class="nav-label">Menu Principal</div>
-        <nav class="nav-menu">
-            <a href="parametre.jsp" class="nav-item">
-                <i class="fas fa-sliders-h"></i>
-                <span>Configuration</span>
-            </a>
-            <a href="client.jsp" class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>Clients</span>
-            </a>
-            <a href="demande.jsp" class="nav-item active">
-                <i class="fas fa-clipboard-list"></i>
-                <span>Demandes</span>
-            </a>
-        </nav>
-    </div>
-
-    <div class="sidebar-footer">
-        <div class="user-profile">
-            <div class="user-avatar"></div>
-            <div class="user-info">
-                <span class="user-name">Admin User</span>
-                <span class="user-id">ETU 3661</span>
-            </div>
-        </div>
-    </div>
-</aside>
+<jsp:include page="/WEB-INF/views/fragments/navbar.jsp" />
 
 <main class="main-content">
     <h1>Tableau de Bord Demandes</h1>
-    
-    <!-- FORMULAIRE DEMANDE -->
-    <div class="demande-section">
-        <h2>Ajouter une Demande</h2>
-        <form action="demande" method="post">
-            <div>
-                <label>ID Client</label>
-                <input type="number" name="id_client" placeholder="Entrer l'ID du client" required>
-            </div>
-            <div>
-                <label>Date Demande</label>
-                <input type="date" name="date_demande" required>
-            </div>
-            <div>
-                <label>Lieu</label>
-                <input type="text" name="lieu" placeholder="Entrer le lieu de la demande" required>
-            </div>
-            <div>
-                <label>District</label>
-                <input type="text" name="district" placeholder="Entrer le district" required>
-            </div>
-            
-            <div>
-                <button type="submit">Ajouter Demande</button>
-            </div>
-        </form>
+<!-- FORMULAIRE DEMANDE -->
+<form action="/demande/create" method="post">
+    <div>
+        <label>Client</label>
+        <select name="client.idClient" required>
+            <option value="">-- Sélectionner un client --</option>
+            <c:forEach var="client" items="${clients}">
+                <option value="${client.idClient}">${client.nom} ${client.contact}</option>
+            </c:forEach>
+        </select>
+    </div>  
+    <div>
+        <label>Lieu</label>
+        <input type="text" name="lieu" placeholder="Entrer le lieu de la demande" required>
     </div>
 
-    <!-- LISTE DES DEMANDES -->
+    <div>
+        <label>District</label>
+        <input type="text" name="district" placeholder="Entrer le district" required>
+    </div>
+    <div class="btn-demande">
+        <button type="submit">Créer Demande</button>
+    </div>
+</form>
+
+<!-- Message succès -->
+<c:if test="${not empty message}">
+    <div class="success-message">${message}</div>
+</c:if>
+
+<c:if test="${not empty demandes}">
     <div class="demande-list-section">
         <h2>Liste des Demandes</h2>
         <table class="data-table">
@@ -86,60 +55,44 @@
                     <th>Date Demande</th>
                     <th>Lieu</th>
                     <th>District</th>
+                    <th>Statut</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <c:if test="${not empty demandes}">
-                    <c:forEach var="demande" items="${demandes}">
-                        <tr>
-                            <td>${demande.idDemande}</td>
-                            <td>${demande.client.nom}</td>
-                            <td>${demande.dateDemande}</td>
-                            <td>${demande.lieu}</td>
-                            <td>${demande.district}</td>
-                            <td>
-                                <a href="demande/edit/${demande.idDemande}" class="btn-edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="demande/delete/${demande.idDemande}" class="btn-delete">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-                <c:if test="${empty demandes}">
+                <c:forEach var="demande" items="${demandes}">
                     <tr>
-                        <td colspan="6" style="text-align: center;">Aucune demande trouvée</td>
+                        <td>${demande.idDemande}</td>
+                        <td>${demande.client.nom}</td>
+                        <td>${demande.dateDemande}</td>
+                        <td>${demande.lieu}</td>
+                        <td>${demande.district}</td>
+                        <td>
+                            <c:forEach var="ds" items="${demande.demandeStatuts}">
+                                <span class="badge-statut">${ds.statut.statut}</span>
+                            </c:forEach>
+                        </td>
+                        <td>
+                            <a href="/demande/edit/${demande.idDemande}" class="btn-edit" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/demande/delete/${demande.idDemande}" class="btn-delete" onclick="return confirm('Supprimer cette demande ?')" title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>       
                     </tr>
-                </c:if>
+                </c:forEach>
             </tbody>
         </table>
     </div>
+</c:if>
 
-    <!-- RECHERCHE -->
-    <div class="search-section">
-        <h2>Rechercher des Demandes</h2>
-        <form action="demande/search" method="get">
-            <div>
-                <label>Par Client ID:</label>
-                <input type="number" name="clientId" placeholder="ID Client">
-            </div>
-            <div>
-                <label>Par Lieu:</label>
-                <input type="text" name="lieu" placeholder="Lieu">
-            </div>
-            <div>
-                <label>Par District:</label>
-                <input type="text" name="district" placeholder="District">
-            </div>
-            <div>
-                <button type="submit">Rechercher</button>
-            </div>
-        </form>
+<c:if test="${empty demandes}">
+    <div style="text-align: center; color: #94a3b8; margin-top: 20px;">
+        <i class="fas fa-folder-open" style="font-size: 2rem; display: block; margin-bottom: 10px;"></i>
+        <p>Aucune demande enregistrée pour le moment.</p>
     </div>
-        
+</c:if>
 </main>
 
 </body>

@@ -18,9 +18,10 @@ public class ClientService {
         return clientRepository.findAll();
     }
     
-    public Optional<Client> getClientById(Integer id) {
-        return clientRepository.findById(id);
-    }
+   public Client getClientById(Integer id) {
+    return clientRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Client introuvable"));
+}
     
     public Client createClient(Client client) {
         return clientRepository.save(client);
@@ -53,4 +54,9 @@ public class ClientService {
     public List<Client> getClientsByContact(String contact) {
         return clientRepository.findByContact(contact);
     }
+
+    public Client getClientByDemande(Integer idDemande){
+        return clientRepository.getClientByDemande(idDemande);
+    }
+ 
 }

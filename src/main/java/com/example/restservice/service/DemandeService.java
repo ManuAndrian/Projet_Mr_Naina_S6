@@ -2,7 +2,14 @@ package com.example.restservice.service;
 
 import com.example.restservice.entity.Demande;
 import com.example.restservice.repository.DemandeRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,11 +26,16 @@ public class DemandeService {
         return demandeRepository.findAll();
     }
     
-    public Optional<Demande> getDemandeById(Integer id) {
-        return demandeRepository.findById(id);
-    }
+    public Demande getDemandeById(Integer id) {
+    return demandeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Demande introuvable avec l'id : " + id));
+}
     
     public Demande createDemande(Demande demande) {
+        
+        if (demande.getDateDemande() == null) {
+            demande.setDateDemande(java.time.LocalDate.now());
+        }
         return demandeRepository.save(demande);
     }
     
@@ -47,20 +59,26 @@ public class DemandeService {
         }
         return false;
     }
-    
     public List<Demande> getDemandesByClient(Integer clientId) {
         return demandeRepository.findByClientId(clientId);
     }
-    
     public List<Demande> getDemandesByDateRange(LocalDate startDate, LocalDate endDate) {
         return demandeRepository.findByDateDemandeBetween(startDate, endDate);
     }
-    
     public List<Demande> searchDemandesByLieu(String lieu) {
         return demandeRepository.findByLieuContaining(lieu);
     }
-    
     public List<Demande> getDemandesByDistrict(String district) {
         return demandeRepository.findByDistrict(district);
     }
+    @Transactional
+    public List<Demande> getDemandeByClientStatutUpdated(Integer clientId){
+        return demandeRepository.getDemandesByClientWithLastStatut(clientId);
+    }
+    
+    public List<Demande> getAllDemandeStatutUpdated(){
+        return demandeRepository.getAllDemandeClientwithLastStatut();
+    }
+
+    
 }

@@ -1,88 +1,62 @@
 package com.example.restservice.controller;
 
-import com.example.restservice.entity.Demande;
-import com.example.restservice.service.DemandeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/demandes")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.restservice.entity.Client;
+import com.example.restservice.entity.Demande;
+import com.example.restservice.entity.Statut;
+import com.example.restservice.service.ClientService;
+import com.example.restservice.service.DemandeService;
+import com.example.restservice.service.DemandeStatutService;
+import com.example.restservice.service.StatutService;
+
+@Controller
+@RequestMapping("/demande")
 public class DemandeController {
 
     @Autowired
     private DemandeService demandeService;
 
-    // GET all demandes
-    @GetMapping
-    public List<Demande> getAllDemandes() {
-        return demandeService.getAllDemandes();
-    }
+    @Autowired 
+    private StatutService statutService;
 
-    // GET demande by id
-    @GetMapping("/{id}")
-    public ResponseEntity<Demande> getDemandeById(@PathVariable Integer id) {
-        Optional<Demande> demande = demandeService.getDemandeById(id);
-        if (demande.isPresent()) {
-            return ResponseEntity.ok(demande.get());
-        }
-        return ResponseEntity.notFound().build();
-    }
+    @Autowired 
+    private DemandeStatutService demandeStatutService;
 
-    // POST create demande
-    @PostMapping
-    public Demande createDemande(@RequestBody Demande demande) {
-        return demandeService.createDemande(demande);
-    }
+    @Autowired
+    private ClientService clientService;
 
-    // PUT update demande
-    @PutMapping("/{id}")
-    public ResponseEntity<Demande> updateDemande(@PathVariable Integer id, @RequestBody Demande demandeDetails) {
-        Optional<Demande> updatedDemande = demandeService.updateDemande(id, demandeDetails);
-        if (updatedDemande.isPresent()) {
-            return ResponseEntity.ok(updatedDemande.get());
-        }
-        return ResponseEntity.notFound().build();
-    }
 
-    // DELETE demande
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDemande(@PathVariable Integer id) {
-        if (demandeService.deleteDemande(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
+@PostMapping("create")
+public String createDemande(@ModelAttribute Demande demande, Model model) {
 
-    // GET demandes by client
-    @GetMapping("/search/client/{clientId}")
-    public List<Demande> getDemandesByClient(@PathVariable Integer clientId) {
-        return demandeService.getDemandesByClient(clientId);
-    }
-
-    // GET demandes by date range
-    @GetMapping("/search/date")
-    public List<Demande> getDemandesByDateRange(
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-        return demandeService.getDemandesByDateRange(start, end);
-    }
-
-    // GET demandes by lieu (contient)
-    @GetMapping("/search/lieu")
-    public List<Demande> getDemandesByLieu(@RequestParam String lieu) {
-        return demandeService.searchDemandesByLieu(lieu);
-    }
-
-    // GET demandes by district
-    @GetMapping("/search/district")
-    public List<Demande> getDemandesByDistrict(@RequestParam String district) {
-        return demandeService.getDemandesByDistrict(district);
-    }
+    if (demande.getClient() == null || demande.getClient().getIdClient() == null) {
+    throw new RuntimeException("Client non sélectionné !");
 }
+
+    Integer clientId = demande.getClient().getIdClient();
+    Client client = clientService.getClientById(clientId);
+    demande.setClient(client);
+    
+    // sauvegarde
+    demandeService.createDemande(demande);
+    Statut statut = statutService.getStatutByName("Demande creer");
+    demandeStatutService.creerDemandeStatut(demande, statut);
+
+    List<Client> clients = clientService.getAllClients();
+    List<Demande> demandes = demandeService.getDemandeByClientStatutUpdated(clientId);
+
+    model.addAttribute("clients", clients);
+    model.addAttribute("demandes", demandes);
+    model.addAttribute("message", "Demande créée avec succès !");
+    return "demande";
+}
+    }   

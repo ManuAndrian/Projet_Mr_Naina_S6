@@ -14,10 +14,11 @@ public class Devis {
     @Column(name = "id_devis")
     private Integer idDevis;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_typeDevis", nullable = false)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_typeDevis")
     private TypeDevis typeDevis;
-    
+
     @Column(name = "date_devis")
     private LocalDate dateDevis;
     
@@ -27,10 +28,13 @@ public class Devis {
     
     @Column(name = "montantTotal", precision = 10, scale = 2)
     private BigDecimal montantTotal;
+
+    @Column(name = "statut")
+    private String statut;
     
-    @OneToMany(mappedBy = "devis", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "devis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DetailsDevis> detailsDevis;
-    
+
     // Getters et Setters
     public Integer getIdDevis() {
         return idDevis;
@@ -67,7 +71,15 @@ public class Devis {
     public BigDecimal getMontantTotal() {
         return montantTotal;
     }
-    
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
+
     public void setMontantTotal(BigDecimal montantTotal) {
         this.montantTotal = montantTotal;
     }
